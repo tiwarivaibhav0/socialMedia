@@ -1,45 +1,46 @@
 <?php
 include 'header.php';
 
-if(isset($_SESSION['user']))
- header('location:home.php');
+if (isset($_SESSION['user']))
+  header('location:home.php');
 
 ?>
 
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
-      }
+<style>
+  .bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+  }
 
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-    </style>
+  @media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+      font-size: 3.5rem;
+    }
+  }
+</style>
 
-    
-    <!-- Custom styles for this template -->
-    <link href="register.css" rel="stylesheet">
-  </head>
 
-  <body>
+<!-- Custom styles for this template -->
+<link href="register.css" rel="stylesheet">
+</head>
+
+<body>
   <title>SocialContract.com</title>
 
-<!-- <div class=" modal-sheet position-static d-block  py-5" tabindex="-1" role="dialog" id="modalSheet"> -->
+  <!-- <div class=" modal-sheet position-static d-block  py-5" tabindex="-1" role="dialog" id="modalSheet"> -->
   <div class="modal-dialog" role="document">
     <div class="modal-content rounded-6 shadow pt-2">
 
-<div class="modal-body p-4 pt-2  ">
-         <form class="needs-validation" novalidate action="#" id="Register"> 
-       
-    <div class="form-floating mb-3" id="Warning">
-            
-          </div><div class="form-floating mb-3">
+      <div class="modal-body p-4 pt-2  ">
+        <form class="needs-validation" novalidate action="#" id="Register">
+
+          <div class="form-floating mb-3" id="Warning">
+
+          </div>
+          <div class="form-floating mb-3">
             <input type="text" name="fname" class="form-control rounded-4" id="floatingfname" placeholder="First Name" required>
             <label for="floatingfname">First Name</label>
           </div>
@@ -56,7 +57,7 @@ if(isset($_SESSION['user']))
             <label for="floatingemail">Username </label>
           </div>
           <div class="form-floating mb-3">
-            <input type="number" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"  name="mobile" class="form-control rounded-4" id="floatingmobile" placeholder="Mobile No." maxlength="10" required>
+            <input type="number" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" name="mobile" class="form-control rounded-4" id="floatingmobile" placeholder="Mobile No." maxlength="10" required>
             <label for="floatingemail">Mobile No. </label>
           </div>
           <div class="form-floating mb-3">
@@ -83,10 +84,10 @@ if(isset($_SESSION['user']))
             <label for="floatingPassword">Enter same Password as above</label>
           </div>
           <div class="form-floating mb-3" id="reg">
-            
+
           </div>
           <!-- <div class="form-floating mb-3"> -->
-           <!-- <select name="User_type" id="User_type" class="form-control rounded-4" required>
+          <!-- <select name="User_type" id="User_type" class="form-control rounded-4" required>
              <option value="admin">Admin</option>
              <option value="user">User</option>
 
@@ -98,21 +99,20 @@ if(isset($_SESSION['user']))
 
           <label for="floatingPassword">Select User Type</label>
           </div> -->
-          
+
           <button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" type="submit">Sign up</button>
           <small class="text-muted">By clicking Sign up, you agree to the terms of use.</small>
-          <p>Have an account? <a href="login.php">Login</a></p>
-         
+          <p>Have an account? <a href="login.php?#">Login</a></p>
+
         </form>
       </div>
     </div>
   </div>
-</div>
+  </div>
 
-<div class="b-example-divider"></div>
+  <div class="b-example-divider"></div>
 
 
-    <script src="/js/bootstrap.bundle.min.js"></script>  
+  <script src="/js/bootstrap.bundle.min.js"></script>
 
-  </body>
-
+</body>
