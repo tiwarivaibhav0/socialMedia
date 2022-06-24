@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (in_array($filetype, $allowed)) {
             // Check whether file exists before uploading it
             if (file_exists("upload/" . $filename)) {
-                echo $filename . " is already exists.";
+                echo $filename . " already exists. GO to<a href='home.php'>Home</a>";
             } else {
                 if (move_uploaded_file($_FILES["anyfile"]["tmp_name"], "uploads/" . $filename)) {
                     $sql = "INSERT INTO images(file,type,size) VALUES('$filename','$filetype','$filesize')";

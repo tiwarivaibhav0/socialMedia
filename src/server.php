@@ -115,7 +115,7 @@ if (isset($_POST['loginEmail'])) {
 
       if ($remember == 1) {
         $cookie_id = $id;
-        $cookie_name = $_SESSION['user'];
+        $cookie_name = $_SESSION['username'];
         $role = $_SESSION['admin'];
         setcookie("id", $cookie_id, time() + (86400 * 30), "/");
         setcookie("name", $cookie_name, time() + (86400 * 30), "/");
@@ -763,16 +763,19 @@ if (isset($_POST['shareId'])) {
     $img = $rows[0]['image'];
     $details = $rows[0]['details'];
     $video = $rows[0]['video'];
-    $user = $_SESSION['user'];
+    $user = $_SESSION['username'];
 
 
 
 
-    $sql = "INSERT INTO Post (`user_id`, `image`, `details`, `post_date`, `likes`, `comments`, `username`,`video`) VALUES('$id','$img','$details',now(),0,0,'$user','$video')";
+    $sql = "INSERT INTO Post (`user_id`, `image`, `details`, `post_date`, `likes`, `comments`, `username`,`video`) VALUES('$id','$img','$details',now(),0,0,'$user',$video)";
 
     $conn->query($sql);
+    echo ("1");
   } catch (PDOException $e) {
-    // echo "Connection failed: " . $e->getMessage();
+    // echo ("0");
+
+    echo "Connection failed: " . $e->getMessage();
   }
 }
 
