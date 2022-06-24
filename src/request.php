@@ -36,7 +36,7 @@ if (isset($_SESSION['user']))
           </a>
           <a class="nav-link px-3 text-info" href="find.php">Search for Friends!</a>
           <img class="user__avatar" src="data:image/png;base64" alt="" />
-          <a href="friends.php" style="text-decoration:none" class="text-muted"> <?php echo "<span class='mx-2' >" . $_SESSION['user'] . " </span>"; ?></a>
+          <a href="friends.php" style="text-decoration:none" class="text-muted"> <?php echo "<span class='mx-2' >" . $_SESSION['username'] . " </span>"; ?></a>
       </div>
       <a href="logout.php"> <span class="material-icons"> logout </span></a>
     </div>

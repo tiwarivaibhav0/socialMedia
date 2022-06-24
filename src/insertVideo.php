@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $row = $result->fetchAll(PDO::FETCH_ASSOC);
                     $img = $row[0]['file'];
                     $id = $_SESSION['id'];
-                    $user = $_SESSION['user'];
+                    $user = $_SESSION['username'];
                     $sql = "INSERT INTO Post (`user_id`, `image`, `details`, `post_date`, `likes`, `comments`, `username`,`video`) VALUES('$id','$img','$txt',now(),0,0,'$user',1)";
 
                     $conn->query($sql);

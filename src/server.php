@@ -416,7 +416,7 @@ function friends()
 if (isset($_POST['postContent'])) {
   $txt = $_POST['postContent'];
   $id = $_SESSION['id'];
-  $user = $_SESSION['user'];
+  $user = $_SESSION['username'];
   $sql = "INSERT INTO Post (`user_id`, `image`, `details`, `post_date`, `likes`, `comments`, `username`,`video`) VALUES('$id',NULL,'$txt',now(),0,0,'$user',0)";
   $conn->query($sql);
 }
