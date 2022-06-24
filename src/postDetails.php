@@ -24,7 +24,7 @@ if (isset($_SESSION['user']))
     </div>
     <div class="header__right">
       <div class="header__info">
-        <?php if (isset($_SESSION['user'])) { ?>
+        <?php if (isset($_SESSION['username'])) { ?>
           <a class="nav-link px-3 " href="request.php">
             <span class='bi bi-person-x-fill' style='color:#000; height:25px'></span>
             <?php if (isset($_SESSION['request'])) { ?>
