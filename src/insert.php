@@ -28,10 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     $conn->query($sql);
                     $lastId = $conn->lastInsertId();
-
                     $sql = "select * from images where img_id='$lastId'";
-
-
                     $result = $conn->query($sql);
                     $row = $result->fetchAll(PDO::FETCH_ASSOC);
                     $img = $row[0]['file'];

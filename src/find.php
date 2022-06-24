@@ -32,9 +32,6 @@ if (isset($_SESSION['user']))
           <input type="text" placeholder="Search Facebook" />
         </div> -->
     </div>
-
-
-
     <div class="header__right">
       <div class="header__info">
 
@@ -58,11 +55,6 @@ if (isset($_SESSION['user']))
       </div>
 
       <a href="logout.php"> <span class="material-icons"> logout </span></a>
-
-
-
-
-
     </div>
   </div>
 
@@ -110,11 +102,6 @@ if (isset($_SESSION['user']))
           } catch (PDOException $e) {
             echo "Connection failed: " . $e->getMessage();
           } ?>
-
-
-
-
-
           <?php
           $id = $_SESSION['id'];
           foreach ($rows as $key => $val) {
@@ -165,20 +152,8 @@ if (isset($_SESSION['user']))
         }
         ?>
       </div><!-- /.row -->
-
-
     </div><!-- /.container -->
-
-
-
   </main>
-
-
-
-
-
-
-
   <footer class="text-muted py-5">
     <div class="container">
       <p class="float-end mb-1">

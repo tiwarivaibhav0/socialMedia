@@ -25,13 +25,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } else {
                 if (move_uploaded_file($_FILES["anyfile2"]["tmp_name"], "uploads/" . $filename)) {
                     $sql = "INSERT INTO images(file,type,size) VALUES('$filename','$filetype','$filesize')";
-
                     $conn->query($sql);
                     $lastId = $conn->lastInsertId();
-
                     $sql = "select * from images where img_id='$lastId'";
-
-
                     $result = $conn->query($sql);
                     $row = $result->fetchAll(PDO::FETCH_ASSOC);
                     $img = $row[0]['file'];

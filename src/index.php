@@ -1,11 +1,8 @@
 <?php
 include 'header.php';
-
 if (isset($_SESSION['user']))
   header('location:home.php');
-
 ?>
-
 <style>
   .bd-placeholder-img {
     font-size: 1.125rem;
@@ -21,24 +18,16 @@ if (isset($_SESSION['user']))
     }
   }
 </style>
-
-
-<!-- Custom styles for this template -->
 <link href="register.css" rel="stylesheet">
 </head>
 
 <body>
   <title>SocialContract.com</title>
-
-  <!-- <div class=" modal-sheet position-static d-block  py-5" tabindex="-1" role="dialog" id="modalSheet"> -->
   <div class="modal-dialog" role="document">
     <div class="modal-content rounded-6 shadow pt-2">
-
       <div class="modal-body p-4 pt-2  ">
         <form class="needs-validation" novalidate action="#" id="Register">
-
           <div class="form-floating mb-3" id="Warning">
-
           </div>
           <div class="form-floating mb-3">
             <input type="text" name="fname" class="form-control rounded-4" id="floatingfname" placeholder="First Name" required>
@@ -86,20 +75,6 @@ if (isset($_SESSION['user']))
           <div class="form-floating mb-3" id="reg">
 
           </div>
-          <!-- <div class="form-floating mb-3"> -->
-          <!-- <select name="User_type" id="User_type" class="form-control rounded-4" required>
-             <option value="admin">Admin</option>
-             <option value="user">User</option>
-
-             <option value="customer">Customer</option>
-
-             <option value="manager">Manager</option>
-
-           </select>
-
-          <label for="floatingPassword">Select User Type</label>
-          </div> -->
-
           <button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" type="submit">Sign up</button>
           <small class="text-muted">By clicking Sign up, you agree to the terms of use.</small>
           <p>Have an account? <a href="login.php?#">Login</a></p>
@@ -109,10 +84,6 @@ if (isset($_SESSION['user']))
     </div>
   </div>
   </div>
-
   <div class="b-example-divider"></div>
-
-
   <script src="/js/bootstrap.bundle.min.js"></script>
-
 </body>

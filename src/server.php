@@ -1,22 +1,15 @@
 <?php
 include 'connection.php';
-
 if (isset($_POST['checkEmail'])) {
-
   $checkEmail = $_POST['checkEmail'];
   $checkUsername = $_POST['checkUsername'];
-
-
   try {
     $sql = "SELECT *
                  from User where User.email='$checkEmail'
                 ";
 
     $res = $conn->query($sql);
-
     $rows = $res->fetchAll(PDO::FETCH_ASSOC);
-    //   var_dump($rows);
-
     if (count($rows) > 0) {
       echo ("0");
     } else {
@@ -25,10 +18,7 @@ if (isset($_POST['checkEmail'])) {
            ";
 
       $res = $conn->query($sql);
-
       $rows = $res->fetchAll(PDO::FETCH_ASSOC);
-      //  var_dump($rows);
-
       if (count($rows) > 0) {
         echo ("1");
       } else {
@@ -36,15 +26,11 @@ if (isset($_POST['checkEmail'])) {
       }
     }
   } catch (PDOException $e) {
-    // echo "Connection failed: " . $e->getMessage();
   }
 }
 
 if (isset($_POST['data'])) {
   parse_str(json_decode($_POST['data']), $arr);
-  //  echo(json_decode($_POST['data']));
-  //var_dump($arr);
-
   $fname = $arr['fname'];
   $lname = $arr['lname'];
   $email = $arr['email'];
@@ -55,64 +41,35 @@ if (isset($_POST['data'])) {
   $pin = $arr['pin'];
   $password = $arr['password'];
   $img = "https://www.pngfind.com/pngs/m/610-6104451_image-placeholder-png-user-profile-placeholder-image-png.png";
-
-
-
-
-
-
-
-
-
   try {
     $sql = "INSERT INTO `User` ( `fname`, `lname`, `email`, `username`, `mobile`,`city`,`country`,`pin`,`password`,`user_type`,`picture`) VALUES ('$fname', '$lname', '$email', '$username', '$mobile','$city','$Country','$pin','$password','user','$img');";
 
     $conn->query($sql);
     echo ("Successfully Inserted");
   } catch (PDOException $e) {
-    // echo "Connection failed: " . $e->getMessage();
   }
 }
-
 if (isset($_POST['loginEmail'])) {
   $email = $_POST['loginEmail'];
   $password = $_POST['loginPassword'];
   $remember = $_POST['remember'];
-
-
   try {
     $sql = "SELECT *
                from User where User.email='$email'
                AND User.password='$password'";
 
     $res = $conn->query($sql);
-
     $rows = $res->fetchAll(PDO::FETCH_ASSOC);
-    //var_dump($rows);
-
     if (count($rows) > 0) {
-      // $_SESSION['request']=array();
-
-      // $_SESSION['request']['id']=1;
-      // echo($rows[0]["firstname"]);
       $id = $rows[0]["user_id"];
       $_SESSION['user'] = $rows[0]["fname"] . ' ' . $rows[0]["lname"];
       $_SESSION['username'] = $rows[0]["username"];
-
       $_SESSION['email'] = $rows[0]["email"];
-
-
-
-
-
       if ($rows[0]["user_type"] == 'admin') {
         $_SESSION['admin'] = 1;
       } else
         $_SESSION['admin'] = 0;
-
-
       $_SESSION['id'] = $id;
-
       if ($remember == 1) {
         $cookie_id = $id;
         $cookie_name = $_SESSION['username'];
@@ -121,30 +78,19 @@ if (isset($_POST['loginEmail'])) {
         setcookie("name", $cookie_name, time() + (86400 * 30), "/");
         setcookie("role", $role, time() + (86400 * 30), "/");
       }
-
       try {
         $sql = "SELECT *
                              from request where user_id='$id'
                              ";
 
         $res = $conn->query($sql);
-
         $rows = $res->fetchAll(PDO::FETCH_ASSOC);
-
         if (count($rows) > 0) {
-
           $_SESSION['request'] = array();
           $_SESSION['request'] = $rows;
-          //   var_dump($_SESSION['request']);
-
-
-
         }
       } catch (PDOException $e) {
-        // echo "Connection failed: " . $e->getMessage();
       }
-
-
       echo ("1");
     } else
       echo ("0");
@@ -153,31 +99,21 @@ if (isset($_POST['loginEmail'])) {
   }
 }
 
-
 if (isset($_POST['findFriend'])) {
   $findFriend = $_POST['findFriend'];
   $id = $_SESSION['id'];
-
-
   $sql = "SELECT *
   from User where User.email='$findFriend'
   ";
-
   $res = $conn->query($sql);
-
   $rows = $res->fetchAll(PDO::FETCH_ASSOC);
   if (count($rows) > 0) {
-    // echo($rows[0]['fname']);
     $findId = $rows[0]['user_id'];
-
-
-
     $sql = "SELECT friend_id
   from friend where user_id='$id'
   ";
 
     $res = $conn->query($sql);
-
     $rowsF = $res->fetchAll(PDO::FETCH_ASSOC);
     if (in_array($findId, $rowsF[0])) {
       $_SESSION['findFriend'] = 0;
@@ -200,20 +136,15 @@ if (isset($_POST['findFriend'])) {
 
     $rows = $res->fetchAll(PDO::FETCH_ASSOC);
     if (count($rows) > 0) {
-      // echo($rows[0]['fname']);
       $findId = $rows[0]['user_id'];
       $sql = "SELECT friend_id
       from friend where user_id='$id'
       ";
-
       $res = $conn->query($sql);
-
       $rowsF = $res->fetchAll(PDO::FETCH_ASSOC);
       if (in_array($findId, $rowsF[0])) {
         $_SESSION['findFriend'] = 0;
       } else {
-
-
         if ($findId == $_SESSION['id'])
           $_SESSION['findFriend'] = 0;
         else {
@@ -229,12 +160,9 @@ if (isset($_POST['findFriend'])) {
   }
 }
 
-
-
 if (isset($_POST['showAll'])) {
   unset($_SESSION['findFriend']);
 }
-
 
 if (isset($_POST['addFriendClick'])) {
   $id = $_SESSION['id'];
@@ -249,73 +177,50 @@ if (isset($_POST['addFriendClick'])) {
   }
 }
 
-
 if (isset($_POST['acceptRequest'])) {
   $id = $_SESSION['id'];
   $acceptRequest = $_POST['acceptRequest'];
   try {
     $sql = "INSERT INTO `friend` ( `user_id`, `friend_id`,`mute`) VALUES ('$id', '$acceptRequest',0);";
-
     $conn->query($sql);
     echo ("Successfully Inserted");
-
     $sql = "INSERT INTO `friend` ( `user_id`, `friend_id`,`mute`) VALUES ('$acceptRequest', '$id',0);";
-
     $conn->query($sql);
     echo ("Successfully Inserted");
-
     $sql = "delete from `request` where user_id='$id' AND request_id='$acceptRequest'";
-
     $conn->query($sql);
     echo ("Deleted");
   } catch (PDOException $e) {
     // echo "Connection failed: " . $e->getMessage();
   }
 }
-
-
 if (isset($_POST['editLikeID'])) {
   $likeId = $_POST['editLikeID'];
   $id = $_SESSION['id'];
   try {
     $sql = "update `Post` set likes=likes+1 where post_id='$likeId'";
-
     $conn->query($sql);
-
     $sql = "INSERT into likes(`user_id`,`post_id`) VALUES ('$id','$likeId') ; ";
-
     $conn->query($sql);
   } catch (PDOException $e) {
     // echo "Connection failed: " . $e->getMessage();
   }
   try {
     $id = $_SESSION['id'];
-
     $sql = "SELECT *
              from Post where user_id IN (SELECT friend_id
     FROM friend where user_id='$id' AND mute=0)";
     $res = $conn->query($sql);
 
     $rows = $res->fetchAll(PDO::FETCH_ASSOC);
-
     // echo(count($rows));
-
   } catch (PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
   } ?>
-
-
-
-
-
-
   <?php
   $txt = "";
   foreach ($rows as $key => $val) {
     if ($val['user_id'] != $_SESSION['id']) {
-
-
-
       $txt .= '<div class="post"><div class="post__top"><div class="post__topInfo"> <span class="h3">' . $val['username'] . '</span>
       <p>' . $val['post_date'] . '</p>
     </div>
@@ -367,8 +272,6 @@ if (isset($_POST['editLikeID'])) {
       } catch (PDOException $e) {
         // echo "Connection failed: " . $e->getMessage();
       }
-
-
       $txt .= ' <div class="post__option">
       <span class="material-icons comments" id="' . $val['post_id'] . '"> chat_bubble_outline </span>
       <p>' . $val['comments'] . '</p>
@@ -384,10 +287,6 @@ if (isset($_POST['editLikeID'])) {
   }
   echo $txt;
 }
-
-
-
-
 if (isset($_POST['detailsProductId'])) {
   $_SESSION['postId'] = $_POST['detailsProductId'];
   showDetails();
@@ -395,12 +294,9 @@ if (isset($_POST['detailsProductId'])) {
   echo 1;
 }
 
-
 if (isset($_POST['deleteFriend'])) {
   $deleteFriend = $_POST['deleteFriend'];
   $id = $_SESSION['id'];
-
-
   try {
     $sql = "delete from `friend` where user_id='$id' AND friend_id='$deleteFriend'";
 
@@ -411,13 +307,9 @@ if (isset($_POST['deleteFriend'])) {
     // echo "Connection failed: " . $e->getMessage();
   }
 }
-
-
 if (isset($_POST['muteFriend'])) {
   $muteFriend = $_POST['muteFriend'];
   $id = $_SESSION['id'];
-
-
   try {
     $sql = "update `friend` set mute=1 where user_id='$id' AND friend_id='$muteFriend'";
 
@@ -427,8 +319,6 @@ if (isset($_POST['muteFriend'])) {
     echo "Connectioon failed: " . $e->getMessage();
   }
 }
-
-
 if (isset($_POST['unMuteFriend'])) {
   $unMuteFriend = $_POST['unMuteFriend'];
   $id = $_SESSION['id'];
@@ -444,24 +334,16 @@ if (isset($_POST['unMuteFriend'])) {
   }
 }
 
-
-
 function friends()
 { ?>
-
   <div class="container marketing " style="width: 50%;">
     <hr>
     <hr>
-
     <div class="row">
-
       <?php
-
       try {
         $id = $_SESSION['id'];
-
         global $conn;
-
         $sql = "SELECT * FROM User where user_id  IN 
             (SELECT friend_id
             FROM friend where user_id='$id' and mute=0)";
@@ -473,17 +355,10 @@ function friends()
 
       } catch (PDOException $e) {
       } ?>
-
-
-
-
-
       <?php
       $id = $_SESSION['id'];
       foreach ($rows as $key => $val) {  ?>
-
         <div class="col-lg-12 row" id="searchFriends">
-
           <div class="col">
             <img src="<?php echo ($val['picture'])   ?>" class="border" style="border-radius: 25px;" alt="" width="50%">
             <br><br>
@@ -495,43 +370,26 @@ function friends()
           <div class="col">
             <span><a class="btn btn-danger  deleteFriend" href="#" id="<?php echo ($val['user_id'])   ?>"><i class="bi bi-trash"></i></a></span>
             <span><a class="btn btn-info  muteFriend" href="#" id="<?php echo ($val['user_id'])   ?>"><i class="bi bi-volume-mute"></i></a></span>
-
           </div>
         </div>
         <br>
         <hr><!-- /.col-lg-4 -->
-
       <?php
-
       }
-
-
       try {
         $id = $_SESSION['id'];
         global $conn;
-
         $sql = "SELECT * FROM User where user_id  IN 
             (SELECT friend_id
             FROM friend where user_id='$id' and mute=1)";
         $res = $conn->query($sql);
-
         $rows = $res->fetchAll(PDO::FETCH_ASSOC);
-
-        // echo(count($rows));
-
       } catch (PDOException $e) {
       } ?>
-
-
-
-
-
       <?php
       $id = $_SESSION['id'];
       foreach ($rows as $key => $val) {  ?>
-
         <div class="col-lg-12 row" id="searchFriends">
-
           <div class="col">
             <img src="<?php echo ($val['picture'])   ?>" class="border" style="border-radius: 25px;" alt="" width="50%">
             <br><br>
@@ -548,57 +406,33 @@ function friends()
         </div>
         <br>
         <hr>
-
       <?php
-
       }
       ?>
-
-
-
     </div>
-
-
   </div>
-
 <?php
 }
-
-
 if (isset($_POST['postContent'])) {
   $txt = $_POST['postContent'];
   $id = $_SESSION['id'];
   $user = $_SESSION['user'];
-
   $sql = "INSERT INTO Post (`user_id`, `image`, `details`, `post_date`, `likes`, `comments`, `username`,`video`) VALUES('$id',NULL,'$txt',now(),0,0,'$user',0)";
-
   $conn->query($sql);
 }
-
-
 if (isset($_POST['comment'])) {
   $comment = $_POST['comment'];
   $user = $_SESSION['username'];
   $post_id = $_SESSION['postId'];
-
-
-
   try {
-
     $comment = $conn->quote($comment);
-
-
     $sql = "INSERT INTO `comments` ( `post_id`, `user_name`, `comment`, `replies`) VALUES ('$post_id', '$user', $comment, 0);";
-
     $result = $conn->query($sql);
-
     $sql = "update `Post` set comments=comments+1 where post_id='$post_id'";
-
     $result = $conn->query($sql);
   } catch (PDOException $e) {
     echo "Connectioon failed: " . $e->getMessage();
   }
-
   showDetails();
   echo $_SESSION['detailsId'];
 }
@@ -606,40 +440,17 @@ if (isset($_POST['comment'])) {
 function showDetails()
 {
   global $conn;
-
   $detailsId = $_SESSION['postId'];
-
-
   try {
     $sql = "select * from Post where post_id='$detailsId'";
-
     $result = $conn->query($sql);
     $rows = $result->fetchAll(PDO::FETCH_ASSOC);
     // echo("Successfully Inserted");
-
-
-
-
-
-
-
-
-
-
   } catch (PDOException $e) {
     // echo "Connection failed: " . $e->getMessage();
   }
-
-
-
-
-
   $txt = '';
-
   foreach ($rows as $key => $val) {
-
-
-
     $txt .= '<div class="post mx-auto" ><div class="post__top "><div class="post__topInfo"> <span class="h3">' . $val['username'] . '</span>
           <p>' . $val['post_date'] . '</p>
         </div>
@@ -692,7 +503,6 @@ function showDetails()
       // echo "Connection failed: " . $e->getMessage();
     }
 
-
     $txt .= ' <div class="post__option">
           <span class="material-icons comments"  id="' . $val['post_id'] . '"> chat_bubble_outline </span>
           <p>' . $val['comments'] . '</p>
@@ -709,7 +519,6 @@ function showDetails()
     border:none;
     outline:none;" id="comment">
     <br>
-   
   </div>
   <button class="btn btn-primary" id="commentBtn">Comment</button>
 <br><br><div class="float-start">';
@@ -743,38 +552,25 @@ function showDetails()
   } catch (PDOException $e) {
     // echo "Connection failed: " . $e->getMessage();
   }
-
-
   $_SESSION['detailsId'] = $txt;
 }
 
 if (isset($_POST['shareId'])) {
   $shareId = $_POST['shareId'];
   $id = $_SESSION['id'];
-
-
   try {
     $sql = "select * from Post where post_id='$shareId'";
 
     $result = $conn->query($sql);
     $rows = $result->fetchAll(PDO::FETCH_ASSOC);
-    // echo("Successfully Inserted");
-
     $img = $rows[0]['image'];
     $details = $rows[0]['details'];
     $video = $rows[0]['video'];
     $user = $_SESSION['username'];
-
-
-
-
     $sql = "INSERT INTO Post (`user_id`, `image`, `details`, `post_date`, `likes`, `comments`, `username`,`video`) VALUES('$id','$img','$details',now(),0,0,'$user',$video)";
-
     $conn->query($sql);
     echo ("1");
   } catch (PDOException $e) {
-    // echo ("0");
-
     echo "Connection failed: " . $e->getMessage();
   }
 }
@@ -783,7 +579,6 @@ if (isset($_POST['commentText'])) {
   $commentText = $_POST['commentText'];
   $id = $_POST['commentId'];
   $commentText = $conn->quote($commentText);
-
   try {
     $sql = "update comments set comment=$commentText where comment_id='$id'";
 
@@ -798,8 +593,6 @@ if (isset($_POST['commentText'])) {
 
 if (isset($_POST['deleteCommentId'])) {
   $deleteCommentId = $_POST['deleteCommentId'];
-
-
   try {
     $sql = "delete from comments where comment_id='$deleteCommentId'";
 
@@ -812,11 +605,9 @@ if (isset($_POST['deleteCommentId'])) {
   echo $_SESSION['detailsId'];
 }
 
-
 if (isset($_POST['deleteFriend'])) {
   $deleteFriend = $_POST['deleteFriend'];
   $id = $_SESSION['id'];
-
   try {
     $sql = "delete from friend where user_id='$id' And friend_id='$deleteFriend'";
 
@@ -830,30 +621,13 @@ if (isset($_POST['deleteFriend'])) {
     $conn->query($sql);
   } catch (PDOException $e) {
   }
-
-
-
-
-
-
   echo friends();
 }
 
 if (isset($_POST['deleteFriendRequest'])) {
   $deleteFriendRequest = $_POST['deleteFriendRequest'];
   $id = $_SESSION['id'];
-
-
   $sql = "delete from `request` where user_id='$id' AND request_id='$deleteFriendRequest'";
-
   $conn->query($sql);
 }
-
-
-
-
-
-
-
-
 ?>
