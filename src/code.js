@@ -192,7 +192,7 @@ $(document).ready(function () {
   $(document).on("click", ".like", function (e) {
     e.preventDefault();
     //alert($(this).attr("id"));
-    $(this).css("color", "blue");
+    //$(this).css("color", "blue");
     $.ajax({
       url: "server.php",
       type: "POST",
